@@ -21,7 +21,7 @@ int _atoi(char *s)
 	while (a < len && x == 0)
 	{
 		if (s[a] == '-')
-			b++;
+			++b;
 		if (s[a] >= '0' && s[a] <= 9)
 		{
 			digit = s[a] - '0';
@@ -54,9 +54,11 @@ int main(int argc, char *argv[])
 	int num1;
 	int num2;
 
-	if (argc != 3)
+	if (argc < 3 || argc > 3)
+	{
 		printf("Error\n");
-	return (1);
+		return (1);
+	}
 
 	num1 = _atoi(argv[1]);
 	num2 = _atoi(argv[2]);
