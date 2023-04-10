@@ -44,7 +44,7 @@ int is_number(char *s)
 	{
 		if (*s < '0' || *s > '9')
 			return (0);
-			s++;
+		s++;
 	}
 	return (1);
 }
