@@ -20,9 +20,9 @@ char *str_concat(char *s1, char *s2)
 		s1 = "";
 	if (s2 == NULL)
 		s2 = "";
-	while ((s1[x] = '\0'))
+	while (s1[x] != '\0')
 		x++;
-	while ((s2[y] = '\0'))
+	while (s2[y] != '\0')
 		y++;
 	a = malloc((sizeof(char) * x) * (sizeof(char) * (y + 1)));
 	if (a == NULL)
