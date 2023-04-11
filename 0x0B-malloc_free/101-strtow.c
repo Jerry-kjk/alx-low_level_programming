@@ -57,7 +57,7 @@ char **strtow(char *str)
 			j++;
 		while (str[j + len] != ' ' && str[j + len] != '\0')
 			len++;
-		arr[i] = malloc(len * sizeof(char));
+		arr[i] = malloc((len + 1) * sizeof(char));
 		if (arr[i] == NULL)
 		{
 			for (k = 0; k < i; ++k)
