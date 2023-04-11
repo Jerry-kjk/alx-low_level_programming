@@ -7,8 +7,6 @@
  * Return: The number of words in the string.
  */
 
-int count_words(char *str);
-
 int count_words(char *str)
 {
 	int count = 0;
@@ -26,6 +24,26 @@ int count_words(char *str)
 		str++;
 	}
 	return (count);
+}
+
+/**
+ * word_len - locates the index marking the end of the.
+ * @str: The string to be searched.
+ * Return: The index marking the end of the initial word pointed to by str.
+ */
+
+int word_len(char *str)
+{
+	int index = 0, len = 0;
+
+	while (*(str + index) && *(str + index) != ' ')
+	{
+		/* iterate until end of string or a space is found */
+		len++;
+		index++;
+	}
+
+	return (len);
 }
 
 /**
