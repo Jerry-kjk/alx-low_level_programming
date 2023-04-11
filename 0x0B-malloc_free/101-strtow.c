@@ -7,21 +7,23 @@
  * Return: The number of words in the string.
  */
 
+int word_len(char *str);
+
 int count_words(char *str)
 {
 	int count = 0;
-	int in_word = 0;
+	int len = 0;
+	int i = 0;
 
-	while (*str != '\0')
+	for (i = 0; *(str + i); i++)
+		len++;
+	for (i = 0; i < len; i++)
 	{
-		if (*str == ' ')
-			in_word = 0;
-		else if (in_word == 0)
+		if (*(str + i) != ' ')
 		{
-			in_word = 1;
 			count++;
+			i += word_len(str + i);
 		}
-		str++;
 	}
 	return (count);
 }
@@ -38,7 +40,6 @@ int word_len(char *str)
 
 	while (*(str + index) && *(str + index) != ' ')
 	{
-		/* iterate until end of string or a space is found */
 		len++;
 		index++;
 	}
@@ -54,40 +55,44 @@ int word_len(char *str)
 
 char **strtow(char *str)
 {
-	int i;
-	int j;
-	int k;
-	int len = 0;
-	int words;
 	char **arr;
+	int i = 0;
+	int words;
+	int j;
+	int letters;
+	int l;
 
-	if (str == NULL || *str == '\0')
+	if (str == NULL || str[0] == '\0')
+	{
 		return (NULL);
+	}
 	words = count_words(str);
 	if (words == 0)
+	{
 		return (NULL);
-	arr = malloc((words + 1) * sizeof(char));
+	}
+	arr = malloc(sizeof(char *) * (words + 1));
 	if (arr == NULL)
 		return (NULL);
-	for (i = 0, j = 0; i < words; ++i)
+
+	for (j = 0; j < words; j++)
 	{
-		while (str[j] == ' ')
-			j++;
-		while (str[j + len] != ' ' && str[j + len] != '\0')
-			len++;
-		arr[i] = malloc((len + 1) * sizeof(char));
-		if (arr[i] == NULL)
+		while (str[i] == ' ')
+			i++;
+
+		letters = word_len(str + i);
+		arr[j] = malloc(sizeof(char) * (letters + 1));
+		if (arr[j] == NULL)
 		{
-			for (k = 0; k < i; ++k)
-				free(arr[k]);
+			for (; j >= 0; j--)
+				free(arr[j]);
 			free(arr);
 			return (NULL);
 		}
-		for (k = 0; k < len; ++k)
-			arr[i][k] = str[j + k];
-		arr[i][len] = '\0';
-		j += len;
+		for (l = 0; l < letters; l++)
+			arr[j][l] = str[i++];
+		arr[j][l] = '\0';
 	}
-	arr[i] = NULL;
+	arr[j] = NULL;
 	return (arr);
 }
