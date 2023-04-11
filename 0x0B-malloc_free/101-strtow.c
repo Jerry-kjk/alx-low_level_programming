@@ -48,7 +48,7 @@ char **strtow(char *str)
 	words = count_words(str);
 	if (words == 0)
 		return (NULL);
-	arr = malloc(words  * sizeof(char *));
+	arr = malloc(words * sizeof(char));
 	if (arr == NULL)
 		return (NULL);
 	for (i = 0, j = 0; i < words; ++i)
