@@ -9,6 +9,7 @@
  * @name: the dog name.
  * @age: the dog age.
  * @owner: owner of the dog.
+ * Return: always 0.
  */
 
 struct dog
