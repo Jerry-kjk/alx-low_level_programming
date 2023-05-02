@@ -10,12 +10,8 @@ size_t print_listint_safe(const listint_t *head)
 {
 	int current;
 	size_t num = 0;
-	const listint_t *temp = head;
+	const listint_t *temp = head, *prev = NULL;
 
-	if (head == NULL)
-	{
-		exit(98);
-	}
 	while (temp != NULL)
 	{
 		num++;
@@ -23,11 +19,17 @@ size_t print_listint_safe(const listint_t *head)
 		current = temp - temp->next;
 		if (current > 0)
 		{
+			prev = temp;
 			temp = temp->next;
 		}
 		else
 		{
-			printf("[%p] %d\n", (void *)temp->next, temp->next->n);
+			printf("-> [%p] %d\n", (void *)temp->next, temp->next->n);
+			break;
+		}
+		if (temp <= prev)
+		{
+			printf("-> [%p] %d\n", (void *)temp, temp->n);
 			break;
 		}
 	}
