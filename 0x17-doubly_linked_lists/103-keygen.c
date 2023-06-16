@@ -3,47 +3,51 @@
 #include <string.h>
 
 /**
- * generate_key - generates and prints passwords for the crackme5 executable.
- * @username: username.
- * Return: Always 0.
- */
-
-char *generate_key(const char *username)
-{
-	size_t length = strlen(username);
-	char *key = (char *)malloc(length + 1);
-
-	size_t i;
-
-	for (i = 0; i < length; i++)
-	{
-		key[i] = username[i] ^ (char)(i + 1);
-	}
-	key[length] = '\0';
-	return (key);
-}
-
-/**
  * main - entry point.
  * @argc: arguments count.
  * @argv: argument vector.
  * Return: Always 0.
  */
 
-int main(int argc, char *argv[])
+int main(int __attribute__((__unused__)) argc, char *argv[])
 {
-	char *username;
-	char *key;
+	char pswd[7];
+	char *code;
+	int len = strlen(argv[1]), i, tmp;
 
-	if (argc != 2)
+	code  = "A-CHRDw87lNS0E9B2TibgpnMVys5XzvtOGJcYLU+4mjW6fxqZeF3Qa1rPhdKIouk";
+	tmp = (len ^ 59) & 63;
+	pswd[0] = code[tmp];
+
+	tmp = 0;
+	for (i = 0; i < len; i++)
+		tmp += argv[1][i];
+	pswd[1] = code[(tmp ^ 79) & 63];
+
+	tmp = 1;
+	for (i = 0; i < len; i++)
+		tmp *= argv[1][i];
+	pswd[2] = code[(tmp ^ 85) & 63];
+
+	tmp = 0;
+	for (i = 0; i < len; i++)
 	{
-		printf("Usage: %s <username>\n", argv[0]);
-		return (1);
+		if (argv[1][i] > tmp)
+			tmp = argv[1][i];
 	}
-	username = argv[1];
-	key = generate_key(username);
+	srand(tmp ^ 14);
+	pswd[3] = code[rand() & 63];
 
-	printf("%s\n", key);
-	free(key);
+	tmp = 0;
+	for (i = 0; i < len; i++)
+		tmp += (argv[1][i] * argv[1][i]);
+	pswd[4] = code[(tmp ^ 239) & 63];
+
+	for (i = 0; i < argv[1][0]; i++)
+		tmp = rand();
+	pswd[5] = code[(tmp ^ 229) & 63];
+
+	pswd[6] = '\0';
+	printf("%s", pswd);
 	return (0);
 }
